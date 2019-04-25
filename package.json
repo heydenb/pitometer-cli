@@ -4,9 +4,10 @@
   "description": "Run the pitometer build validation",
   "main": "app.js",
   "dependencies": {
-    "@pitometer/grader-threshold": "git+https://github.com/pitometer/grader-thresholds.git",
-    "@pitometer/pitometer": "git+https://github.com/pitometer/pitometer.git",
-    "@pitometer/source-dynatrace": "git+https://github.com/pitometer/source-dynatrace.git"
+    "@pitometer/grader-threshold": "github:keptn/pitometer-grader-thresholds#0.0.2",
+    "@pitometer/pitometer": "github:keptn/pitometer#0.0.2",
+    "@pitometer/source-dynatrace": "github:keptn/pitometer-source-dynatrace#0.0.2",
+    "dotenv": "^7.0.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -17,6 +18,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git://github.com/username/repository.git"
+    "url": "https://github.com/dt-demos/pitometer-cli.git"
+  },
+  "engines": {
+    "node": "10.x",
+    "npm": "6.4.x"
   }
 }
