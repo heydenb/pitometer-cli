@@ -1,0 +1,22 @@
+{
+  "name": "pitometer_testing",
+  "version": "1.0.0",
+  "description": "Run the pitometer build validation",
+  "main": "app.js",
+  "dependencies": {
+    "@pitometer/grader-threshold": "git+https://github.com/pitometer/grader-thresholds.git",
+    "@pitometer/pitometer": "git+https://github.com/pitometer/pitometer.git",
+    "@pitometer/source-dynatrace": "git+https://github.com/pitometer/source-dynatrace.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Rob Jahn",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
+  }
+}
