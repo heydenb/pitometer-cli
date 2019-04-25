@@ -6,7 +6,7 @@ const ThresholdGrader = require('@pitometer/grader-threshold').Grader;
 
 /////////////////////////////////////////////////////////////////////////////
 // Grab the arguments
-// example: npm start 1556060400 1556061466 ./monspec-sample.json
+// example: npm start 1556060400 1556061466 ./samples/perfspec-sample.json
 /////////////////////////////////////////////////////////////////////////////
 const args = process.argv;
 var START_TIME_IN_SECONDS = args[2]
@@ -18,22 +18,48 @@ var PERFSPEC_FILE_PATH = args[4]
 //console.log('END_TIME_IN_SECONDS = ' + END_TIME_IN_SECONDS);
 //console.log('PERFSPEC_FILE_PATH = ' + PERFSPEC_FILE_PATH);
 
-/////////////////////////////////////////////////////////////////////////////
-// read  in configuration properties
-/////////////////////////////////////////////////////////////////////////////
-var obj, dynatraceApiToken, dynatraceBaseUrl;
-var configFile = require('./config.json');
+// if don't find environment variables, then look to see if they are defined
+// in a local .env file
 
-obj = JSON.parse(JSON.stringify(configFile));
-dynatraceApiToken = obj.dynatraceApiToken;
-dynatraceBaseUrl = obj.dynatraceBaseUrl;
-// future
-//prometheusQueryUrl = obj.prometheusQueryUrl;
+if(!process.env.DYNATRACE_BASEURL && !process.env.DYNATRACE_APITOKEN )
+{
+  console.log("Reading .env file");
+  const dotenv = require('dotenv');
+  dotenv.config();
+}
 
+/////////////////////////////////////////////////////////////////////////////
+// validate required arguments
+/////////////////////////////////////////////////////////////////////////////
+if(!process.env.DYNATRACE_BASEURL)
+{
+  console.log("{ result: 'error', message: 'Missing environment variable: DYNATRACE_BASEURL' })");
+  return process.exit(1);
+}
+if(!process.env.DYNATRACE_APITOKEN)
+{
+  console.log("{ status: 'error', message: 'Missing environment variable: DYNATRACE_APITOKEN' })");
+  return process.exit(1);
+}
+if(!PERFSPEC_FILE_PATH)
+{
+  console.log("{ status: 'error', message: 'Missing perfSpec. Please check your request body and try again.' })");
+  return process.exit(1);
+}
+if(!START_TIME_IN_SECONDS)
+{
+  console.log("{ status: 'error', message: 'Missing timeStart. Please check your request body and try again.' })");
+  return process.exit(1);
+}
+if(!END_TIME_IN_SECONDS)
+{
+  console.log("{ status: 'error', message: 'Missing timeEnd. Please check your request body and try again.' })");
+  return process.exit(1);
+}
 // debug output
-//console.log('configFile = ' + JSON.stringify(configFile));
-//console.log('dynatraceApiToken = ' + dynatraceApiToken);
-//console.log('dynatraceBaseUrl = ' + dynatraceBaseUrl);
+//console.log('PERFSPEC_FILE_PATH = ' + PERFSPEC_FILE_PATH);
+//console.log('DYNATRACE_BASEURL = ' + process.env.DYNATRACE_BASEURL);
+//console.log('DYNATRACE_APITOKEN = ' + process.env.DYNATRACE_APITOKEN);
 // future
 // console.log('queryUrl = ' + prometheusQueryUrl);
 
@@ -52,8 +78,8 @@ pitometer.addSource('Prometheus', new PrometheusSource({
 
 // Register a Dynatrace source
 pitometer.addSource('Dynatrace', new DynatraceSource({
-  baseUrl: dynatraceBaseUrl,
-  apiToken: dynatraceApiToken,
+  baseUrl: process.env.DYNATRACE_BASEURL,
+  apiToken: process.env.DYNATRACE_APITOKEN
   // Optional: A logger to be used for debugging API requests
   // log: console.log,
 }));
@@ -66,10 +92,11 @@ pitometer.addGrader('Threshold', new ThresholdGrader());
 // Run pitometer
 /////////////////////////////////////////////////////////////////////////////
 const perfspec = require(PERFSPEC_FILE_PATH);
+var telemetryErr ="";
 
 pitometer.run(perfspec, {
   timeStart: START_TIME_IN_SECONDS,
   timeEnd: END_TIME_IN_SECONDS
 })
 .then((results) => console.log(JSON.stringify(results)))
-.catch((err) => console.error(err));
+.catch((err) => console.log("{ status: 'error', message: " + err + " }"))
