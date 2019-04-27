@@ -100,8 +100,6 @@ try {
   console.log("{ status: 'error', message: " + err + " }")
 }
 
-var perfspec_obj = JSON.parse(perfspec_data);
-
 pitometer.run(perfspec_obj, {
   timeStart: START_TIME_IN_SECONDS,
   timeEnd: END_TIME_IN_SECONDS
