@@ -9,10 +9,25 @@ const ThresholdGrader = require('@pitometer/grader-threshold').Grader;
 // Grab the arguments
 // example: npm start 1556060400 1556061466 ./samples/perfspec-sample.json
 /////////////////////////////////////////////////////////////////////////////
-const args = process.argv;
-var START_TIME_IN_SECONDS = args[2]
-var END_TIME_IN_SECONDS = args[3]
-var PERFSPEC_FILE_PATH = args[4]
+// const args = process.argv;
+// var START_TIME_IN_SECONDS = args[2]
+// var END_TIME_IN_SECONDS = args[3]
+// var PERFSPEC_FILE_PATH = args[4]
+
+const minimist = require('minimist');
+
+let args = minimist(process.argv.slice(2), {
+    alias: {
+      h: 'help',
+      s: 'timeStart',
+      e: 'timeEnd',
+      f: 'perfspecFile'
+    }
+});
+
+var START_TIME_IN_SECONDS = args.timeStart
+var END_TIME_IN_SECONDS = args.timeEnd
+var PERFSPEC_FILE_PATH = args.perfspecFile
 
 // debug output
 //console.log('START_TIME_IN_SECONDS = ' + START_TIME_IN_SECONDS);
