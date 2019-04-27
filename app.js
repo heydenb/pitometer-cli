@@ -92,10 +92,17 @@ pitometer.addGrader('Threshold', new ThresholdGrader());
 /////////////////////////////////////////////////////////////////////////////
 // Run pitometer
 /////////////////////////////////////////////////////////////////////////////
-const perfspec = require(PERFSPEC_FILE_PATH);
-var telemetryErr ="";
+var fs = require('fs');
+try {
+  var perfspec_data = fs.readFileSync(PERFSPEC_FILE_PATH, 'utf8')
+  var perfspec_obj = JSON.parse(perfspec_data)
+} catch (error) {
+  console.log("{ status: 'error', message: " + err + " }")
+}
 
-pitometer.run(perfspec, {
+var perfspec_obj = JSON.parse(perfspec_data);
+
+pitometer.run(perfspec_obj, {
   timeStart: START_TIME_IN_SECONDS,
   timeEnd: END_TIME_IN_SECONDS
 })
