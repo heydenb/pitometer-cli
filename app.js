@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const Pitometer = require('@pitometer/pitometer').Pitometer;
 const DynatraceSource = require('@pitometer/source-dynatrace').Source;
 const ThresholdGrader = require('@pitometer/grader-threshold').Grader;
