@@ -22,13 +22,32 @@ The "perf spec" processing logic uses the [Keptn Pitometer NodeJS modules](https
     export DYNATRACE_APITOKEN=<dynatrace API token>
     ```
 
-# CLI usage
+# CLI basic usage
 * Call the script ```npm start <startTime> <endTime> <perfSpec File>```
 * Arguments
   * timeStart - start time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
   * timeEnd - end time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
   * perfSpec File - a file in JSON format containing the performance signature
 
+# CLI usage in a script
+
+Below is an example UNIX shell script to call the CLI and parse the output using [jq json query utility](https://stedolan.github.io/jq/)
+
+```
+#!/bin/bash
+CURRENT_TIME=$(printf "%(%s)T")
+START_TIME=$(printf "$(( $(printf "%(%s)T") - 360 * 60 ))")
+npm start $START_TIME $CURRENT_TIME ./samples/perfspec-springmusic.json | tail -n +5 > pitometer_output.json
+jq '.' pitometer_output.json
+result="$(jq -r '.result' pitometer_output.json)"
+if [ "$result" = "fail" ]; then
+  echo "This build has failed based on pitometer evaluation"
+  exit 1
+else
+  echo "This build has passed pitometer evaluation"
+  exit 0
+fi
+```
 
 ## perfSpec File format
 
