@@ -116,7 +116,7 @@ try {
   var perfspec_data = fs.readFileSync(PERFSPEC_FILE_PATH, 'utf8')
   var perfspec_obj = JSON.parse(perfspec_data)
 } catch (error) {
-  console.log("{ status: 'error', message: " + err + " }")
+  console.log("{ status: 'error', message: " + error + " }")
 }
 
 pitometer.run(perfspec_obj, {
