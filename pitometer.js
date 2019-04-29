@@ -117,6 +117,7 @@ try {
   var perfspec_obj = JSON.parse(perfspec_data)
 } catch (error) {
   console.log("{ status: 'error', message: " + error + " }")
+  process.exit();
 }
 
 pitometer.run(perfspec_obj, {
