@@ -7,14 +7,9 @@
     "@pitometer/grader-threshold": "github:keptn/pitometer-grader-thresholds#0.0.2",
     "@pitometer/pitometer": "github:keptn/pitometer#0.0.2",
     "@pitometer/source-dynatrace": "github:keptn/pitometer-source-dynatrace#0.0.2",
-<<<<<<< HEAD
-    "minimist": "1.2.0",
-    "dotenv": "^7.0.0"
-=======
     "dotenv": "^7.0.0",
     "moment": "^2.24.0",
     "yargs": "^13.2.2"
->>>>>>> 4f334d476509127e50caae34e87776f11e20fa48
   },
   "devDependencies": {},
   "scripts": {
@@ -25,11 +20,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akirasoft/pitometer-cli.git"
-  },
-  "preferGlobal": true,
-  "bin": {
-    "pitometer-cli": "./app.js"
+    "url": "https://github.com/dt-demos/pitometer-cli.git"
   },
   "engines": {
     "node": "10.x",
