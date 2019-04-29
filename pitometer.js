@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var moment = require('moment');
 const args = require('yargs')
   .usage('Usage:\n\n1) Start and Stop Times\n    $0 -p [perfspec file] -s [Start Time] -e [End Time] \n\n2) Relative Time\n    $0 -p [perfspec file] -r [Relative Time]\n\n    Possible values for the relativeTime\n    10mins,15mins,2hours,30mins,3days,5mins,6hours,day,hour,min,month,week')
@@ -48,32 +49,33 @@ if(!process.env.DYNATRACE_BASEURL && !process.env.DYNATRACE_APITOKEN )
 /////////////////////////////////////////////////////////////////////////////
 if(!process.env.DYNATRACE_BASEURL)
 {
-  console.log("{ result: 'error', message: 'Missing environment variable: DYNATRACE_BASEURL' })");
+  console.log("{\"result\": \"error\", \"message\": \"Missing environment variable: DYNATRACE_BASEURL\"}");
   return process.exit(1);
 }
 if(!process.env.DYNATRACE_APITOKEN)
 {
-  console.log("{ status: 'error', message: 'Missing environment variable: DYNATRACE_APITOKEN' })");
+  console.log("{ \"status\": \"error\", \"message\": \"Missing environment variable: DYNATRACE_APITOKEN\"}");
   return process.exit(1);
 }
 if(!PERFSPEC_FILE_PATH)
 {
-  console.log("{ status: 'error', message: 'Missing perfSpec. Please check your request body and try again.' })");
+  console.log("{ \"status\": \"error\", \"message\": \"Missing perfSpec. Please check your request body and try again.\"}");
   return process.exit(1);
 }
 if(!START_TIME_IN_SECONDS && !END_TIME_IN_SECONDS && !RELATIVE_TIME)
 {
-  console.log("{ status: 'error', message: 'Missing either start & end timestamp or relativeTime. Please check your request body and try again.' })");
+  console.log("{ \"status\": \"error\", \"message\": \"Missing either start & end timestamp or relativeTime. Please check your request body and try again.\"}");
   return process.exit(1);
 }
+
 if(START_TIME_IN_SECONDS && !END_TIME_IN_SECONDS)
 {
-  console.log("{ status: 'error', message: 'Missing start time. Please check your request body and try again.' })");
+  console.log("{ \"status\": \"error\", \"message\": \"Missing start time. Please check your request body and try again.\"}");
   return process.exit(1);
 }
 if(!START_TIME_IN_SECONDS && END_TIME_IN_SECONDS)
 {
-  console.log("{ status: 'error', message: 'Missing end time. Please check your request body and try again.' })");
+  console.log("{ \"status\": \"error\", \"message\": \"Missing end time. Please check your request body and try again.\"}");
   return process.exit(1);
 }
 // debug output
@@ -116,8 +118,11 @@ try {
   var perfspec_data = fs.readFileSync(PERFSPEC_FILE_PATH, 'utf8')
   var perfspec_obj = JSON.parse(perfspec_data)
 } catch (error) {
-  console.log("{ status: 'error', message: " + error + " }")
-  process.exit();
+  //console.log("{ \"status\": \"error\", \"message\": " + "\"" + error + "\" }")
+  //console.log(error)
+  var errorMessage = { status: 'error', message: error }
+  console.log(JSON.stringify(errorMessage));
+  process.exit(1);
 }
 
 pitometer.run(perfspec_obj, {
@@ -125,7 +130,10 @@ pitometer.run(perfspec_obj, {
   timeEnd: END_TIME_IN_SECONDS
 })
 .then((results) => console.log(JSON.stringify(results)))
-.catch((err) => console.log("{ status: 'error', message: " + err + " }"))
+.catch((err) => {
+  var errorMessage = { status: 'error', message: err }
+  console.log(JSON.stringify(errorMessage));
+})
 
 function setStartTime(relativeTime) {
   // get current time
