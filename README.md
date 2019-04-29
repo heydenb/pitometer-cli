@@ -21,7 +21,6 @@ The "perf spec" processing logic uses the [Keptn Pitometer NodeJS modules](https
     export DYNATRACE_APITOKEN=<dynatrace API token>
     ```
 
-<<<<<<< HEAD
 # CLI usage
 1. Start and Stop Times
     ```
