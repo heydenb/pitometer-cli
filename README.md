@@ -18,17 +18,25 @@ The "perf spec" processing logic uses the [Keptn Pitometer NodeJS modules](https
 * option 1: set OS variables
     ```
     export DYNATRACE_BASEURL=<dynatrace tenant url, example: https://abc.live.dynatrace.com>
-
     export DYNATRACE_APITOKEN=<dynatrace API token>
     ```
 
 # CLI usage
-* Call the script ```npm start <startTime> <endTime> <perfSpec File>```
-* Arguments
-  * timeStart - start time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
-  * timeEnd - end time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
-  * perfSpec File - a file in JSON format containing the performance signature
+1. Start and Stop Times
+    ```
+    node pitometer.js -p [perfspec file] -s [Start Time] -e [End Time]
+    ```
 
+2. Relative Time
+    ```
+    node pitometer.js -p [perfspec file] -r [Relative Time]
+    ```
+
+* Arguments
+  * perfSpec File - a file in JSON format containing the performance signature. Example: ```./samples/perfspec-sample.json```
+  * start time - start time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
+  * end time - end time in [UTC unix seconds format](https://cloud.google.com/dataprep/docs/html/UNIXTIME-Function_57344718) used for the query
+  * relativeTime - possible values: ```10mins,15mins,2hours,30mins,3days,5mins,6hours,day,hour,min,month,week```
 
 ## perfSpec File format
 
@@ -149,7 +157,6 @@ Example response message
   * option 1: set environment variables in the shell
     ```
     export DYNATRACE_BASEURL=<dynatrace tenant url, example: https://abc.live.dynatrace.com>
-
     export DYNATRACE_APITOKEN=<dynatrace API token>
     ```
   * option 2: make a ```.env``` file in the root project folder wit these values
@@ -157,4 +164,3 @@ Example response message
     DYNATRACE_BASEURL=<dynatrace tenant url, example: https://abc.live.dynatrace.com> 
     DYNATRACE_APITOKEN=<dynatrace API token>
     ```
-* Call the script ```npm start <startTime> <endTime> <perfSpec File>```
