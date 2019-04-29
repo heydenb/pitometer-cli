@@ -46,7 +46,7 @@ Below is an example UNIX shell script to call the CLI and parse the output using
 #!/bin/bash
 CURRENT_TIME=$(printf "%(%s)T")
 START_TIME=$(printf "$(( $(printf "%(%s)T") - 360 * 60 ))")
-node pitometer.js $START_TIME $CURRENT_TIME ./samples/perfspec-springmusic.json | tail -n +5 > pitometer_output.json
+node pitometer.js -s $START_TIME -e $CURRENT_TIME -p ./samples/perfspec-springmusic.json | tail -n +5 > pitometer_output.json
 jq '.' pitometer_output.json
 result="$(jq -r '.result' pitometer_output.json)"
 if [ "$result" = "fail" ]; then
@@ -56,6 +56,21 @@ else
   echo "This build has passed pitometer evaluation"
   exit 0
 fi
+```
+# CLI usage via docker
+
+Below is an example utilizing the pitometer-cli from Docker hub which has been packaged as a standalone binary. Best practices dictate that perfspec files should be stored alongside application code in repo so this command will fetch the perfspec file from source control:
+
+```
+docker pull mvilliger/pitometer-cli
+
+docker run --name pitometer-cli --rm -it mvilliger/pitometer-cli /bin/bash -c \
+'export DYNATRACE_BASEURL="https://<insert-your-dynatrace-url>" && \
+export DYNATRACE_APITOKEN=<insert-your-apitoken> && \
+export CURRENT_TIME=$(printf "%(%s)T") && \
+export START_TIME=$(printf "$(( $(printf "%(%s)T") - 60 * 60 ))") && \
+wget -q -o perfspec.json https://<link to perfspec.json> && \
+pitometer-cli -s $START_TIME -e $CURRENT_TIME -p $PWD/perfspec.json | jq .'
 ```
 
 ## perfSpec File format

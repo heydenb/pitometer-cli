@@ -1,5 +1,5 @@
 {
-  "name": "pitometer_testing",
+  "name": "pitometer-cli",
   "version": "1.0.0",
   "description": "Run the pitometer build validation",
   "main": "app.js",
@@ -21,6 +21,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dt-demos/pitometer-cli.git"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "pitometer-cli": "./pitometer.js"
   },
   "engines": {
     "node": "10.x",
