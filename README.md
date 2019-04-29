@@ -61,7 +61,8 @@ fi
 
 Below is an example utilizing the pitometer-cli from Docker hub which has been packaged as a standalone binary. Best practices dictate that perfspec files should be stored alongside application code in repo so this command will fetch the perfspec file from source control:
 
-```docker pull mvilliger/pitometer-cli
+```
+docker pull mvilliger/pitometer-cli
 
 docker run --name pitometer-cli --rm -it mvilliger/pitometer-cli /bin/bash -c \
 'export DYNATRACE_BASEURL="https://<insert-your-dynatrace-url>" && \
