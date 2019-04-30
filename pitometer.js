@@ -4,12 +4,12 @@ const args = require('yargs')
   .usage('Usage:\n\n1) Start and Stop Times\n    $0 -p [perfspec file] -s [Start Time] -e [End Time] \n\n2) Relative Time\n    $0 -p [perfspec file] -r [Relative Time]\n\n    Possible values for the relativeTime\n    10mins,15mins,2hours,30mins,3days,5mins,6hours,day,hour,min,month,week')
   .require(['p'])
   .argv;
-const Pitometer = require('@pitometer/pitometer').Pitometer;
-const DynatraceSource = require('@pitometer/source-dynatrace').Source;
-const ThresholdGrader = require('@pitometer/grader-threshold').Grader;
+const Pitometer = require('@keptn/pitometer').Pitometer;
+const DynatraceSource = require('@keptn/pitometer-source-dynatrace').Source;
+const ThresholdGrader = require('@keptn/pitometer-grader-threshold').Grader;
 
 // future
-// const PrometheusSource = require('@pitometer/source-prometheus').Source;
+// const PrometheusSource = require('@keptn/source-prometheus').Source;
 
 /////////////////////////////////////////////////////////////////////////////
 // Grab the arguments
