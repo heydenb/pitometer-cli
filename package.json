@@ -1,12 +1,12 @@
 {
-  "name": "pitometer_testing",
+  "name": "pitometer-cli",
   "version": "1.0.0",
   "description": "Run the pitometer build validation",
   "main": "app.js",
   "dependencies": {
-    "@pitometer/grader-threshold": "github:keptn/pitometer-grader-thresholds#0.0.2",
-    "@pitometer/pitometer": "github:keptn/pitometer#0.0.2",
-    "@pitometer/source-dynatrace": "github:keptn/pitometer-source-dynatrace#0.0.2",
+    "@keptn/pitometer-grader-threshold": "1.0.0",
+    "@keptn/pitometer": "1.0.3",
+    "@keptn/pitometer-source-dynatrace": "1.0.0",
     "dotenv": "^7.0.0",
     "moment": "^2.24.0",
     "yargs": "^13.2.2"
@@ -21,6 +21,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dt-demos/pitometer-cli.git"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "pitometer-cli": "./pitometer.js"
   },
   "engines": {
     "node": "10.x",
