@@ -35,3 +35,27 @@ steps:
     node pitometer.js -s $START_TIME -e $CURRENT_TIME -p ./samples/perfspec-springmusic.json | tail -n +5 > pitometer_output.json
     jq '.' pitometer_output.json
   displayName: Run pitometer validation on KBI
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '*.json'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '*.json'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+    flattenFolders: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
