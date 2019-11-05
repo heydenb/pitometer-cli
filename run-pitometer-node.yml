@@ -18,11 +18,16 @@ steps:
     sudo apt update 
     sudo apt install nodejs
     sudo apt install npm
+    sudo apt install jq
   displayName: Install Node and NPM
 
 - script: |
     npm version
   displayName: Check if nodejs is installed
+  
+- script: |
+    npm install
+  displayName: Package pitometer
 
 - script: |
     CURRENT_TIME=$(printf "%(%s)T")
