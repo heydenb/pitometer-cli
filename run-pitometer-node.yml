@@ -33,8 +33,7 @@ steps:
     #!/bin/bash
     export DYNATRACE_BASEURL="https://xiz610.dynatrace-managed.com/e/1576d48e-6811-4f07-af4b-c6345c5e7c41"
     export DYNATRACE_APITOKEN="bGDrn1f_SI-ge2R9P-JLF"
-    node pitometer.js -s 1573542578 -e 1573542754 -p ./samples/perfspec-kbi.json | tail -n +5 > pitometer_output.json
-    jq '.' pitometer_output.json
+    node pitometer.js -s 1573542578 -e 1573542754 -p ./samples/perfspec-kbi.json
   displayName: Run pitometer validation on KBI
 
 - task: CopyFiles@2
