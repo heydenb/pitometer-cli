@@ -1,0 +1,54 @@
+{
+  "spec_version": "1.0",
+  "indicators": [
+    {
+      "id": "P90_ResponseTime_WebNode",
+      "source": "Dynatrace",
+      "query": {
+        "timeseriesId": "com.dynatrace.builtin:service.responsetime",
+        "aggregation": "p90",
+        "tags": [
+          "AC2",
+          "WEB-NODE"
+        ]
+      },
+      "grading": {
+        "type": "Threshold",
+        "thresholds": {
+          "upperSevere": 4000000,
+          "upperWarning": 2000000,
+          "lowerWarning ": 0,
+          "lowerSevere": 0
+        },
+        "metricScore": 80
+      }
+    },
+	{
+      "id": "P90_ResponseTime_RMI_SOANode",
+      "source": "Dynatrace",
+      "query": {
+        "timeseriesId": "com.dynatrace.builtin:service.responsetime",
+        "aggregation": "p90",
+        "tags": [
+          "AC2",
+          "SOA-NODE",
+		  "RMI"
+        ]
+      },
+      "grading": {
+        "type": "Threshold",
+        "thresholds": {
+          "upperSevere": 4000000,
+          "upperWarning": 2000000,
+          "lowerWarning ": 0,
+          "lowerSevere": 0
+        },
+        "metricScore": 80
+      }
+    }
+  ],
+  "objectives": {
+    "pass": 160,
+    "warning": 80
+  }
+}
